@@ -1,67 +1,59 @@
-set nocompatible 
+call plug#begin()
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rhysd/vim-clang-format'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'morhetz/gruvbox'
+Plug 'rakr/vim-one'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'mhartington/oceanic-next'
+call plug#end()
 
-set guioptions=
-
-set incsearch
-set smartcase
-set termencoding=utf8
-set encoding=utf8
-set autoindent
+set number
+"set guifont=Hack:h8
+"set guifont=Liberation\ Mono:h8
+"set guifont=Cascadia\ Mono:h9
+"set guifont=Source\ Code\ Pro:h9
+"set guifont=Consolas:h9
+set guifont=JetBrains\ Mono\ NL:h8
+set relativenumber
 set smartindent
-
-set expandtab
 set tabstop=4
+set splitright
+set expandtab
 set shiftwidth=4
 
-au BufRead,BufNewFile Makefile* set noexpandtab
-
-set showmatch
-
-colorscheme desert
-
-set timeoutlen=50
-
-set t_Co=256
-set guifont=Courier\ New:h10
-set splitright
-set splitbelow
-
-set nu rnu
-set noswapfile
+windo set nowrap
 set nowrap
+set formatoptions=t
+set cursorline
+set background=dark
+set noswapfile
+colorscheme OceanicNext
 
-map <C-b> :NERDTreeToggle<CR>
-map <C-n> :NERDTreeFocus<CR>
+if isdirectory('src/')
+    set path+=src
+endif
 
-map <F5> :VimProjectBuild<CR>
-map <C-F5> :VimProjectBuildDebug<CR>
-map <F7> :VimProjectCompileCurrent %:.<CR>
-map <C-L> :VimProjectLoad<CR>
-map <F2> :cclose<CR>
+if isdirectory('source/')
+    set path+=souce
+endif
 
+if isdirectory('Source/')
+    set path+=Souce
+endif
 
+if isdirectory($VULKAN_SDK."/include/")
+    set path+=$VULKAN_SDK/include
+endif
 
+autocmd FileType c,cpp,cc,hh,hpp,h,cxx ClangFormatAutoEnable
+nnoremap <C-b> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <M-p> :CtrlPFunky<CR>
+nnoremap <F2>  :w $MYVIMRC<CR>:so $MYVIMRC<CR>
+nnoremap <M-F2>  :so $MYVIMRC<CR>
+nnoremap <F5> :AsyncRun -mode=term -cwd=build -pos=right -focus=0 cmake --build .<CR>
+nnoremap <M-F5> :+q<CR>
+let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others  --exclude-standard %s']
 
-function! ToggleHiddenAll()
-    if s:hidden_all  == 0
-        let s:hidden_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
-    else
-        let s:hidden_all = 0
-        set showmode
-        set ruler
-        set laststatus=2
-        set showcmd
-    endif
-endfunction
-
-nnoremap <S-h> :call ToggleHiddenAll()<CR>
-" disable beep
-set vb t_vb=
-" disable visual beep
-set t_vb=
-set belloff=all
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']

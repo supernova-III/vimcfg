@@ -7,14 +7,13 @@ Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-one'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'mhartington/oceanic-next'
+Plug 'ajmwagar/vim-deus'
+Plug 'wadackel/vim-dogrun'
+Plug 'liuchengxu/space-vim-dark'
 call plug#end()
 
 set number
 "set guifont=Hack:h8
-"set guifont=Liberation\ Mono:h8
-"set guifont=Cascadia\ Mono:h9
-"set guifont=Source\ Code\ Pro:h9
-"set guifont=Consolas:h9
 set guifont=JetBrains\ Mono\ NL:h8
 set relativenumber
 set smartindent
@@ -29,7 +28,7 @@ set formatoptions=t
 set cursorline
 set background=dark
 set noswapfile
-colorscheme OceanicNext
+colorscheme dogrun
 
 if isdirectory('src/')
     set path+=src
@@ -43,8 +42,17 @@ if isdirectory('Source/')
     set path+=Souce
 endif
 
+" basic VIM autocompletion for Vulkan API
 if isdirectory($VULKAN_SDK."/include/")
     set path+=$VULKAN_SDK/include
+    badd $VULKAN_SDK/include/vulkan/vulkan_core.h
+    if has('win32')
+        badd $VULKAN_SDK/include/vulkan/vulkan_win32.h
+    elseif has('linux')
+        badd $VULKAN_SDK/include/vulkan/vulkan_xlib.h
+        badd $VULKAN_SDK/include/vulkan/vulkan_xlib_xrandr.h
+        badd $VULKAN_SDK/include/vulkan/vulkan_xlib_wayland.h
+    endif
 endif
 
 autocmd FileType c,cpp,cc,hh,hpp,h,cxx ClangFormatAutoEnable
@@ -55,5 +63,14 @@ nnoremap <F2>  :w $MYVIMRC<CR>:so $MYVIMRC<CR>
 nnoremap <M-F2>  :so $MYVIMRC<CR>
 nnoremap <F5> :AsyncRun -mode=term -cwd=build -pos=right -focus=0 cmake --build .<CR>
 nnoremap <M-F5> :+q<CR>
+
+" win32 binds
+if has('win32')
+    nnoremap <S-T> :vs<CR> :terminal<CR>
+    nnoremap <F4> :!start remedybg project/debug.rdbg<CR><CR>
+endif
+
+
+
 let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others  --exclude-standard %s']
 

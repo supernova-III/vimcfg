@@ -64,6 +64,37 @@ nnoremap <M-F2>  :so $MYVIMRC<CR>
 nnoremap <F5> :AsyncRun -mode=term -cwd=build -pos=right -focus=0 cmake --build .<CR>
 nnoremap <M-F5> :+q<CR>
 
+fu! OpenCompanion()
+    let cur_ext = expand("%:e")
+    if cur_ext == "hh" || cur_ext == "h"
+        let p = expand("%:r")
+
+        if filereadable(p . ".cc")
+            let p = p . ".cc"
+        elseif filereadable(p . ".cpp")
+            let p = p . ".cpp"
+        elseif filereadable(p . ".cxx")
+            let p = p . ".cxx"
+        endif
+
+        execute "vsplit" p
+    elseif cur_ext == "cc" || cur_ext == "cpp" || cur_ext == "cxx"
+        let p = expand("%:r")
+
+        if filereadable(p . ".h")
+            let p = p . ".h"
+        elseif filereadable(p . ".hh")
+            let p = p . ".hh"
+        endif
+
+        execute "vsplit" p
+    endif
+
+endfunction
+
+nnoremap <F3> :call OpenCompanion()<CR>
+nnoremap <C-F2> :e $MYVIMRC<CR>
+
 " win32 binds
 if has('win32')
     nnoremap <S-T> :vs<CR> :terminal<CR>

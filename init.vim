@@ -1,21 +1,22 @@
 call plug#begin()
-Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rhysd/vim-clang-format'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'morhetz/gruvbox'
-Plug 'rakr/vim-one'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'ajmwagar/vim-deus'
-Plug 'wadackel/vim-dogrun'
-Plug 'liuchengxu/space-vim-dark'
+    Plug 'scrooloose/nerdtree'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'rhysd/vim-clang-format'
+    Plug 'tacahiroy/ctrlp-funky'
+    Plug 'morhetz/gruvbox'
+    Plug 'rakr/vim-one'
+    Plug 'skywind3000/asyncrun.vim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'ajmwagar/vim-deus'
+    Plug 'wadackel/vim-dogrun'
+    Plug 'liuchengxu/space-vim-dark'
 call plug#end()
 
-set number
-"set guifont=Hack:h8
-set guifont=JetBrains\ Mono\ NL:h8
-set relativenumber
+"set guifont=Consolas:h9
+set guifont=Roboto\ Mono:h8
+"set guifont=JetBrains\ Mono\ NL:h8
+"set number
+"set relativenumber
 set smartindent
 set tabstop=4
 set splitright
@@ -28,7 +29,7 @@ set formatoptions=t
 set cursorline
 set background=dark
 set noswapfile
-colorscheme dogrun
+colorscheme OceanicNext
 
 if isdirectory('src/')
     set path+=src
@@ -100,6 +101,16 @@ if has('win32')
     nnoremap <S-T> :vs<CR> :terminal<CR>
     nnoremap <F4> :!start remedybg project/debug.rdbg<CR><CR>
 endif
+
+" default formatting
+let g:clang_format#style_options = {
+            \"Language":        "Cpp",
+            \"BasedOnStyle":  "Google",
+            \"AccessModifierOffset": -4,
+            \"SortIncludes": "Never",
+            \"IndentWidth": 4,
+            \"AllowShortFunctionsOnASingleLine": "None",
+            \"BreakBeforeBraces": "Allman"}
 
 
 

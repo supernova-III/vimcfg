@@ -4,12 +4,16 @@ call plug#begin()
     Plug 'rhysd/vim-clang-format'
     Plug 'tacahiroy/ctrlp-funky'
     Plug 'morhetz/gruvbox'
-    Plug 'rakr/vim-one'
+    Plug 'supernova-III/vim-one'
     Plug 'mhartington/oceanic-next'
     Plug 'wadackel/vim-dogrun'
+    Plug 'Shatur/neovim-ayu'
 call plug#end()
 
-set guifont=Roboto\ Mono:h8.5
+set guifont=Roboto\ Mono:h7.5
+"set guifont=JetBrains\ Mono\ NL:h7.5
+"set guifont=Liberation\ Mono:h8
+"set guifont=Consolas:h9
 set smartindent
 set tabstop=4
 set splitright
@@ -19,10 +23,9 @@ set shiftwidth=4
 windo set nowrap
 set nowrap
 set formatoptions=t
-set cursorline
-set background=dark
+set nocursorline
 set noswapfile
-colorscheme gruvbox
+colorscheme one
 
 if isdirectory('src/')
     set path+=src
@@ -53,7 +56,7 @@ nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <M-p> :CtrlPFunky<CR>
 nnoremap <F5> :vsplit term://cmake --build build<CR>
-nnoremap <M-F5> :+q<CR>
+nnoremap <M-F5> :bw!<CR>
 nnoremap <A-F4> :qa<CR>
 
 fu! OpenCompanion(n)

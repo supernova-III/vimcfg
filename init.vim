@@ -4,16 +4,37 @@ call plug#begin()
     Plug 'rhysd/vim-clang-format'
     Plug 'tacahiroy/ctrlp-funky'
     Plug 'morhetz/gruvbox'
-    Plug 'supernova-III/vim-one'
     Plug 'mhartington/oceanic-next'
     Plug 'wadackel/vim-dogrun'
+    Plug 'jsit/toast.vim'
     Plug 'Shatur/neovim-ayu'
+    Plug 'bluz71/vim-nightfly-guicolors'
+    Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
 
-set guifont=Roboto\ Mono:h7.5
-"set guifont=JetBrains\ Mono\ NL:h7.5
-"set guifont=Liberation\ Mono:h8
-"set guifont=Consolas:h9
+let g:gruvbox_bold = 0
+let g:gruvbox_contrast_dark='hard'
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+let g:nightflyItalics = 0
+colorscheme spacemacs-theme
+let c = synIDattr(hlID("Normal"), "bg")
+exe 'hi WinSeparator guibg='.c . ' guifg='.c
+
+"set guifont=Roboto\ Mono:h8
+"set guifont=DinaRemasterII:h11
+set guifont=Iosevka:h9
 set smartindent
 set tabstop=4
 set splitright
@@ -23,9 +44,8 @@ set shiftwidth=4
 windo set nowrap
 set nowrap
 set formatoptions=t
-set nocursorline
+set cursorline
 set noswapfile
-colorscheme one
 
 if isdirectory('src/')
     set path+=src
